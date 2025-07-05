@@ -8,10 +8,6 @@ using System.Threading.Tasks;
 
 namespace Domain.Layer.Models
 {
-
-    /// <summary>
-    /// 
-    /// </summary>
     public class PilotsModel
     {
         public int Id { get; set; }

@@ -8,12 +8,6 @@ using System.Threading.Tasks;
 
 namespace Domain.Layer.Models
 {
-    //Id,Nombre,Email,Descripcion,isActivo
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// 
     public class ClientsModels
     {
         public int Id { get; set; }
