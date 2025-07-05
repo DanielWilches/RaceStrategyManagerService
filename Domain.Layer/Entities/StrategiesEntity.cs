@@ -21,16 +21,6 @@ namespace Domain.Layer.Entities
         [Column("Id")]
         public int Id { get; set; }
 
-        [Column("Pilot_ Id")]
-        [Required]
-        [ForeignKey("Pilots")]
-        public int PilotId { get; set; }
-
-        [Column("Client_Id")]
-        [Required]
-        [ForeignKey("Clients")]
-        public int ClientId { get; set; }
-
         [Column("Date", TypeName = "datetime2")]
         [Required]
         public DateTime Date { get; set; }  
@@ -38,6 +28,21 @@ namespace Domain.Layer.Entities
         [Column("Total_Laps")]
         [Required]
         public int TotalLaps { get; set; }
+
+
+        [Column("Pilot_ Id")]
+        [Required]
+        [ForeignKey("Pilots")]
+        public int PilotId { get; set; }
+        public virtual PilotsEntity Pilot { get; set; }
+
+
+        [Column("Client_Id")]
+        [Required]
+        [ForeignKey("Clients")]
+        public int ClientId { get; set; }
+        public  virtual ClientsEntity Client { get; set; }
+
 
     }
 }

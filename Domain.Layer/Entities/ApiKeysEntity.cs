@@ -27,9 +27,7 @@ namespace Domain.Layer.Entities
         [Column("Key", TypeName = "nvarchar(255)")]
         public string? Key { get; set; }
 
-        [Required]
-        [Column("Id_Cliente", TypeName = "int")]
-        public int IdCliente { get; set; }
+        
 
         [Required]
         [Column("CreateDate", TypeName = "datetime")]
@@ -40,8 +38,12 @@ namespace Domain.Layer.Entities
         [Required]
         [Column("IsActivo", TypeName = "bit")]
         public bool IsActivo { get; set; }
-        // Navigation properties can be added if needed
-        // public virtual ClienteEntity Cliente { get; set; }
+
+        [Required]
+        [Column("Id_Cliente", TypeName = "int")]
+        [ForeignKey("ClientsEntity")]
+        public int IdCliente { get; set; }       
+        public virtual ClientsEntity Client { get; set; }
 
 
 
