@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace RaceStrategyManagerService.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/strategy/[controller]")]
     [ApiController]
     public class ClientsController : ControllerBase
     {

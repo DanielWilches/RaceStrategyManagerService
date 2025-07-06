@@ -29,6 +29,10 @@ namespace Domain.Layer.Entities
         [Required]
         public int TotalLaps { get; set; }
 
+        [Required]
+        [Column("Optimal_Strategy", TypeName = "nvarchar(max)")]
+        public string optimalStrategy{get; set;}
+
 
         [Column("Pilot_ Id")]
         [Required]
