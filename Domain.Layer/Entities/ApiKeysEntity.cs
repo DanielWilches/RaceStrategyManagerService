@@ -26,9 +26,7 @@ namespace Domain.Layer.Entities
         [MinLength(10)]
         [Column("Key", TypeName = "nvarchar(255)")]
         public string? Key { get; set; }
-
         
-
         [Required]
         [Column("CreateDate", TypeName = "datetime")]
         [DataType(DataType.DateTime)]
