@@ -46,6 +46,25 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+//
+//builder.Services.AddCors(options =>
+//{
+//    options.AddPolicy(name: MyAllowSpecificOrigins,
+//        builder =>
+//        {
+//            builder.WithOrigins("http://localhost",
+//                "http://localhost:4200",
+//                "https://localhost:7230",
+//                "http://localhost:90")
+//            .AllowAnyMethod()
+//            .AllowAnyHeader()
+//            .SetIsOriginAllowedToAllowWildcardSubdomains();
+//        });
+//});
+
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
