@@ -29,10 +29,22 @@ namespace Domain.Layer.Entities
         [Required]
         public int TotalLaps { get; set; }
 
+        [Column("Max_Laps")]
+        [Required]
+        public int MaxLaps { get; set; }
+
         [Required]
         [Column("Optimal_Strategy", TypeName = "nvarchar(max)")]
         public string optimalStrategy{get; set;}
 
+        [Required]
+        [Column("Avg_Performance")]
+        public double avgPerformance { get; set; }
+
+        [Required]
+        [Column("avg_Consumption")]
+        public double avgConsumption { get; set; }
+        
 
         [Column("Pilot_ Id")]
         [Required]

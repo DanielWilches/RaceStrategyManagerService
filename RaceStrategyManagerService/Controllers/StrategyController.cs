@@ -24,7 +24,7 @@ namespace RaceStrategyManagerService.Controllers
             return Ok(result);
         }
 
-        [HttpPost("{Strategy}")]
+        [HttpPost]
         public IActionResult CreateStrateg(CreateStrategyRequest Create)
         {
             var result = _strategiesService.CreateStrategy(Create.MaxLaps, Create.ClientId, Create.PilotId).Result;

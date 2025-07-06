@@ -4,13 +4,7 @@ using Application.Layer.Interfaces;
 using Domain.Layer;
 using Domain.Layer.Entities;
 using Domain.Layer.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace Application.Layer.Services
 {
@@ -42,7 +36,11 @@ namespace Application.Layer.Services
                     ClientId = strategy.ClientId,
                     Date = strategy.Date,
                     PilotId = strategy.PilotId,
-                    TotalLaps = strategy.TotalLaps
+                    TotalLaps = strategy.TotalLaps,
+                    MaxLaps = strategy.MaxLaps,
+                    avgPerformance = strategy.avgPerformance,
+                    avgConsumption = strategy.avgConsumption,
+                    optimalStrategy = strategy.optimalStrategy
                 })];
 
                 if (!strategies.Any())
@@ -76,16 +74,26 @@ namespace Application.Layer.Services
                 int pilotId = int.Parse(PilotId);
 
                 List<TiresModel> tires = GetTires().Result;
+                if (tires.Min(item => item.EstimatedLaps) > laps)
+                    throw new Exception("The minimum estimated laps of the tires is less than the total laps.");
+
                 Strategy strategy = new Strategy(tires);
 
                 var optimal = strategy.BuilOptimalEstrategy(laps);
+                string optimalStrategy = string.Empty;
+                foreach (var item in optimal.Strateys)                
+                    optimalStrategy +=  $"{optimal.Strateys}|";
+                
                 var newStrategy = new StrategiesEntity
                 {
                     ClientId = clientId,
                     PilotId = pilotId,
                     Date = DateTime.Now,
-                    TotalLaps = laps,
-                    optimalStrategy = optimal
+                    TotalLaps = optimal?.totalLabs ?? 0,
+                    MaxLaps = laps,
+                    avgPerformance = optimal?.avgPerformance ?? 0,
+                    avgConsumption = optimal?.avgConsumption?? 0,
+                    optimalStrategy = optimalStrategy
                 };
                 await _StrategiesRepository.AddAsync((T)newStrategy);
 
@@ -99,9 +107,6 @@ namespace Application.Layer.Services
                 _ModelResult.Message = ex.Message;
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
-
-
-
             return (ModelResult<StrategiesModel>)_ModelResult;
         }
 
