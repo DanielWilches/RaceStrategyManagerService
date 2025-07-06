@@ -81,9 +81,10 @@ namespace Application.Layer.Services
 
                 var optimal = strategy.BuilOptimalEstrategy(laps);
                 string optimalStrategy = string.Empty;
-                foreach (var item in optimal.Strateys)                
-                    optimalStrategy +=  $"{optimal.Strateys}|";
-                
+                foreach (var item in optimal.Strateys) 
+                   optimalStrategy += $"{item}|";
+                    
+                    
                 var newStrategy = new StrategiesEntity
                 {
                     ClientId = clientId,
