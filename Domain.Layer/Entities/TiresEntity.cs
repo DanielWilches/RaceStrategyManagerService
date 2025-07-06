@@ -34,7 +34,7 @@ namespace Domain.Layer.Entities
         [Required]
         [Column("Consumption_Lap")]
 
-        public int? ConsumptionLap { get; set; }
+        public double? ConsumptionLap { get; set; }
         [Required]
         [Column("Performance")]
         public int? Performance { get; set; }

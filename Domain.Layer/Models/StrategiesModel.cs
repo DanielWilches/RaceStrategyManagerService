@@ -15,5 +15,9 @@ namespace Domain.Layer.Models
         public int ClientId { get; set; }
         public DateTime Date { get; set; }
         public int TotalLaps { get; set; }
+        public string optimalStrategy { get; set; }     
+        public double avgPerformance { get; set; }
+        public double avgConsumption { get; set; }
+        public int MaxLaps { get; set; }
     }
 }

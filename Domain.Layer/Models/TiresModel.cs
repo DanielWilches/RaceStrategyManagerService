@@ -11,7 +11,7 @@ namespace Domain.Layer.Models
         public int Id { get; set; }
         public string? type { get; set; }
         public int? EstimatedLaps { get; set; }
-        public int? ConsumptionLap { get; set; }
+        public double? ConsumptionLap { get; set; }
         public int? Performance { get; set; }
     }
 }
