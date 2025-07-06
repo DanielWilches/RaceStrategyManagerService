@@ -5,6 +5,20 @@ VisualStudioVersion = 17.14.36203.30 d17.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RaceStrategyManagerService", "RaceStrategyManagerService\RaceStrategyManagerService.csproj", "{2B2DD824-9E41-4B62-8B69-03E4673C0D6C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Layer", "Domain.Layer\Domain.Layer.csproj", "{85FD6511-693A-44BE-9817-BA89574A155D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Layer", "Application.Layer\Application.Layer.csproj", "{5AB5577F-E90A-4558-9FE0-B079933C5763}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InterfaceAdapter.Layer", "InterfaceAdapter.Layer\InterfaceAdapter.Layer.csproj", "{0502160E-4DD6-4979-A4EB-269D0124E00E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ScriptsDatabase", "ScriptsDatabase", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
+	ProjectSection(SolutionItems) = preProject
+		CreateDataBase.sql = CreateDataBase.sql
+		insertClient.sql = insertClient.sql
+		InsertTires.sql = InsertTires.sql
+		INSERT_PILOTS.sql = INSERT_PILOTS.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +29,18 @@ Global
 		{2B2DD824-9E41-4B62-8B69-03E4673C0D6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B2DD824-9E41-4B62-8B69-03E4673C0D6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B2DD824-9E41-4B62-8B69-03E4673C0D6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85FD6511-693A-44BE-9817-BA89574A155D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85FD6511-693A-44BE-9817-BA89574A155D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85FD6511-693A-44BE-9817-BA89574A155D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85FD6511-693A-44BE-9817-BA89574A155D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AB5577F-E90A-4558-9FE0-B079933C5763}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AB5577F-E90A-4558-9FE0-B079933C5763}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AB5577F-E90A-4558-9FE0-B079933C5763}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AB5577F-E90A-4558-9FE0-B079933C5763}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0502160E-4DD6-4979-A4EB-269D0124E00E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0502160E-4DD6-4979-A4EB-269D0124E00E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0502160E-4DD6-4979-A4EB-269D0124E00E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0502160E-4DD6-4979-A4EB-269D0124E00E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
