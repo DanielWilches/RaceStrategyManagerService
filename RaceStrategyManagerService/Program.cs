@@ -8,10 +8,12 @@ using Domain.Layer.Models;
 using InterfaceAdapter.Layer.DataContext;
 using InterfaceAdapter.Layer.Respositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using RaceStrategyManagerService.Constants;
 
 
 var builder = WebApplication.CreateBuilder(args);
+const string API_KEY = "RacerManagerApiKey";
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowLocalhost", builder =>
@@ -54,29 +56,46 @@ builder.Services.AddScoped<TiresService<TiresEntity>>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-//var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-//
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: MyAllowSpecificOrigins,
-//        builder =>
-//        {
-//            builder.WithOrigins("http://localhost",
-//                "http://localhost:4200",
-//                "https://localhost:7230",
-//                "http://localhost:90")
-//            .AllowAnyMethod()
-//            .AllowAnyHeader()
-//            .SetIsOriginAllowedToAllowWildcardSubdomains();
-//        });
-//});
-
-
+//builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.AddSecurityDefinition("ApiKey", new OpenApiSecurityScheme
+    {
+        Description = "Ingrese su API Key en el campo X-API-KEY",
+        In = ParameterLocation.Header,
+        Name = "X-API-KEY",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "ApiKeyScheme"
+    });
+    c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "ApiKey"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
 
 var app = builder.Build();
 app.UseCors("AllowLocalhost");
+app.Use(async (context, next) =>
+{
+    if (!context.Request.Headers.TryGetValue("X-API-KEY", out var extractedApiKey) ||
+        extractedApiKey != API_KEY)
+    {
+        context.Response.StatusCode = 401; // No autorizado
+        await context.Response.WriteAsync("API Key faltante o invalida.");
+        return;
+    }
+    await next();
+});
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
