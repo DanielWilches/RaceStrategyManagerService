@@ -33,5 +33,5 @@ Gracias
 
 ## Authors
 
-- [@octokatherine](https://github.com/DanielWilches)
+- [@DanielWilches](https://github.com/DanielWilches)
 
