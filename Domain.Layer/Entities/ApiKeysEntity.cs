@@ -17,7 +17,7 @@ namespace Domain.Layer.Entities
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("Id", TypeName = "int")]
+        [Column("Id_Key", TypeName = "int")]
         [Required]
         public int Id { get; set; }
 

@@ -29,7 +29,7 @@ namespace Application.Layer.Services
         /// this method retrieves all tires from the repository and maps them to a list of TiresModel.
         /// </summary>
         /// <returns></returns>
-        public async Task<ModelResult<TiresModel>> GetAll()
+        public async Task<ResultDTO<TiresModel>> GetAll()
         {
             try
             {
@@ -62,7 +62,7 @@ namespace Application.Layer.Services
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
 
-            return (ModelResult<TiresModel>)_ModelResult;
+            return (ResultDTO<TiresModel>)_ModelResult;
         }
     }
 }

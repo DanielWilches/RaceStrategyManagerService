@@ -1,5 +1,5 @@
 ﻿INSERT INTO RaceStrategyManager.dbo.Pilots
-( Name, Team, nationality)
+( Name_pilot, Team, nationality)
 VALUES 
 ('Max Verstappen', 'Red Bull Racin', 'Países Bajos'),
 ('Lewis Hamilton', 'Mercedes','Reino Unido'),

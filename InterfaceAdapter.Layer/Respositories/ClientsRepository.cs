@@ -1,4 +1,5 @@
 ﻿using Application.Layer.Interfaces;
+using Domain.Layer.DTOs;
 using Domain.Layer.Entities;
 using InterfaceAdapter.Layer.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -12,11 +13,8 @@ namespace InterfaceAdapter.Layer.Respositories
     public class ClientsRepository : IRepository<ClientsEntity>
     {
         private readonly AppDbContext _dbContext;
-        public ClientsRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
+        public ClientsRepository(AppDbContext dbContext) => _dbContext = dbContext;
+       
         /// <summary>
         /// get all clients from the database
         /// </summary>
@@ -73,6 +71,11 @@ namespace InterfaceAdapter.Layer.Respositories
 
             _dbContext.Clients.Remove(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp)
+        {
+            throw new NotImplementedException();
         }
     }
 }

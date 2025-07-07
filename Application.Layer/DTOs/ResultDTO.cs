@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Layer.DTOs
 {
-    public class ModelResult<T>: IModelResult<T>
+    public class ResultDTO<T>: IModelResult<T>
     {
         public bool Success { get; set; }
         public string? Message { get; set; }
@@ -15,8 +15,8 @@ namespace Application.Layer.DTOs
         public List<T> Data{ get; set; }
 
 
-        public ModelResult() { }
-        public ModelResult(bool success, string message,int  statusCode , List<T> data )
+        public ResultDTO() { }
+        public ResultDTO(bool success, string message,int  statusCode , List<T> data )
         {
             Success = success;
             Message = message;

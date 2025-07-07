@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Domain.Layer.DTOs;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Application.Layer.Interfaces
 {
@@ -15,5 +11,6 @@ namespace Application.Layer.Interfaces
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+        Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp);
     }
 }

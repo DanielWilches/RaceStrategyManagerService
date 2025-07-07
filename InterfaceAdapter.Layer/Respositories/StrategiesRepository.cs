@@ -1,4 +1,5 @@
 ﻿using Application.Layer.Interfaces;
+using Domain.Layer.DTOs;
 using Domain.Layer.Entities;
 using InterfaceAdapter.Layer.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +13,14 @@ namespace InterfaceAdapter.Layer.Respositories
     public class StrategiesRepository : IRepository<StrategiesEntity>
     {
         private readonly AppDbContext _dbContext;
-        public StrategiesRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public StrategiesRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
         /// <summary>
         /// get all strategies from the database
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<StrategiesEntity>> GetAllAsync() => await _dbContext.Strategies.ToListAsync();
+
 
         /// <summary>
         /// get a strategy by its id from the database
@@ -73,6 +72,15 @@ namespace InterfaceAdapter.Layer.Respositories
 
             _dbContext.Strategies.Remove(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+    
+        public async Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp)
+        {
+            var prueba = await _dbContext.Database
+                .SqlQuery<StrategiesPilotClientDTO>($"EXEC {sp}")
+                .ToListAsync();
+            return prueba;
         }
     }
 }

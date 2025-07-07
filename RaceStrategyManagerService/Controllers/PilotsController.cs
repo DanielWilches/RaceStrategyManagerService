@@ -9,10 +9,8 @@ namespace RaceStrategyManagerService.Controllers
     public class PilotsController : ControllerBase
     {
         private readonly PilotsService<PilotsEntity> _pilotsService;
-        public PilotsController(PilotsService<PilotsEntity> PilotsService)
-        {
-            _pilotsService = PilotsService;
-        }
+        public PilotsController(PilotsService<PilotsEntity> PilotsService) =>_pilotsService = PilotsService;
+        
 
         [HttpGet]
         public IActionResult GetPilots()
