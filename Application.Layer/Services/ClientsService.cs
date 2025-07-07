@@ -18,11 +18,11 @@ namespace Application.Layer.Services
         public ClientsService(IRepository<T> ClientsRepository)
         {
             _ClientsRepository = ClientsRepository;
-            _ModelResult = new ModelResult<ClientsModels>();
+            _ModelResult = new ResultDTO<ClientsModels>();
         }
 
 
-        public async Task<ModelResult<ClientsModels>> GetById(string id)
+        public async Task<ResultDTO<ClientsModels>> GetById(string id)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace Application.Layer.Services
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
 
-            return (ModelResult<ClientsModels>)_ModelResult;
+            return (ResultDTO<ClientsModels>)_ModelResult;
         }
     }
 }

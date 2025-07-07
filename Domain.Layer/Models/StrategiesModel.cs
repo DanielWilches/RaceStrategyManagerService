@@ -11,13 +11,13 @@ namespace Domain.Layer.Models
     public class StrategiesModel
     {
         public int Id { get; set; }
-        public int PilotId { get; set; }
-        public int ClientId { get; set; }
         public DateTime Date { get; set; }
         public int TotalLaps { get; set; }
         public string optimalStrategy { get; set; }     
         public double avgPerformance { get; set; }
         public double avgConsumption { get; set; }
         public int MaxLaps { get; set; }
+        public ClientsModels clients { get; set; }
+        public PilotsModel pilots { get; set; }
     }
 }

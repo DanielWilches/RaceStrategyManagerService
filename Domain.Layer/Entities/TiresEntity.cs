@@ -19,7 +19,7 @@ namespace Domain.Layer.Entities
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("Id")]
+        [Column("Id_Tires")]
         public int Id { get; set; }
 
         [Required]

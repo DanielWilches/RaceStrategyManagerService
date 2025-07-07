@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Domain.Layer.DTOs
 {
-    public class CombinationsModel
+    public class CombinationsDTO
     {
         public List<string> Strateys { get; set; }
         public List<string> IdStrateys { get; set; }
