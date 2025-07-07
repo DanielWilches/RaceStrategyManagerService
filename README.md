@@ -1,5 +1,5 @@
-
-Hola que tal este es el back para la prueba el front esta en el siguiente repo https://github.com/DanielWilches/RaceStrategyManager
+Race Strategy| 
+Hola que tal este es el back para consultar las mejores estrategias para una carrera, el front esta en el siguiente repo https://github.com/DanielWilches/RaceStrategyManager
 
 
 ## Documentación
