@@ -19,11 +19,11 @@ namespace Application.Layer.Services
         public PilotsService(IRepository<T> PilotsRepository)
         {
             _PilotsRepository = PilotsRepository;
-            _ModelResult = new ModelResult<PilotsModel>();
+            _ModelResult = new ResultDTO<PilotsModel>();
         }
 
 
-        public async Task<ModelResult<PilotsModel>> GetAll()
+        public async Task<ResultDTO<PilotsModel>> GetAll()
         {
             try
             {
@@ -55,10 +55,10 @@ namespace Application.Layer.Services
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
 
-            return (ModelResult<PilotsModel>)_ModelResult;
+            return (ResultDTO<PilotsModel>)_ModelResult;
         }
 
-        public async Task<ModelResult<PilotsModel>> GetById(string  id)
+        public async Task<ResultDTO<PilotsModel>> GetById(string  id)
         {
             try
             {
@@ -93,7 +93,7 @@ namespace Application.Layer.Services
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
 
-            return (ModelResult<PilotsModel>)_ModelResult;
+            return (ResultDTO<PilotsModel>)_ModelResult;
         }
 
     }

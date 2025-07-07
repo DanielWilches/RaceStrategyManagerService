@@ -12,10 +12,8 @@ namespace RaceStrategyManagerService.Controllers
 
         private readonly ClientsService<ClientsEntity> _ClientService;
 
-        public ClientsController(ClientsService<ClientsEntity> ClientService)
-        {
-            _ClientService = ClientService;
-        }
+        public ClientsController(ClientsService<ClientsEntity> ClientService) =>_ClientService = ClientService;
+        
 
         [HttpPost("{id}")]
         public IActionResult GetClient(string id)

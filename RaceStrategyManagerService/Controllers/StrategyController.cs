@@ -11,11 +11,7 @@ namespace RaceStrategyManagerService.Controllers
     public class StrategyController : ControllerBase
     {
         private readonly StrategiesService<StrategiesEntity> _strategiesService;
-        public StrategyController(StrategiesService<StrategiesEntity> StrategiesService)
-        {
-            _strategiesService = StrategiesService;
-        }
-
+        public StrategyController(StrategiesService<StrategiesEntity> StrategiesService) => _strategiesService = StrategiesService;
 
         [HttpGet]
         public IActionResult GetStrategies()

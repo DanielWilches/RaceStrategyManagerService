@@ -12,10 +12,7 @@ namespace InterfaceAdapter.Layer.Respositories
     public class TiresRepository : IRepository<TiresEntity>
     {
         private readonly AppDbContext _dbContext;
-        public TiresRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public TiresRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
         /// <summary>
         ///  get all tires from the database

@@ -12,10 +12,7 @@ namespace InterfaceAdapter.Layer.Respositories
     public class PilotsRespository : IRepository<PilotsEntity>
     {
         private readonly AppDbContext _dbContext;
-        public PilotsRespository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public PilotsRespository(AppDbContext dbContext) => _dbContext = dbContext; 
 
         /// <summary>
         /// get all pilots from the database

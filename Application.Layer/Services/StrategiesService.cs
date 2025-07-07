@@ -2,6 +2,7 @@
 using Application.Layer.Enum;
 using Application.Layer.Interfaces;
 using Domain.Layer;
+using Domain.Layer.DTOs;
 using Domain.Layer.Entities;
 using Domain.Layer.Models;
 
@@ -20,13 +21,16 @@ namespace Application.Layer.Services
             _tiresService = tiresService;
         }
 
-
-        public async Task<ModelResult<StrategiesModel>> GetAll()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        public async Task<ResultDTO<StrategiesModel>> GetAll()
         {
             try
             {
                 var result = await _StrategiesRepository.GetAllAsync();
-
+                
                 if (!result.Any())
                     throw new Exception("No strategies found.");
 
@@ -58,11 +62,18 @@ namespace Application.Layer.Services
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
 
-            return (ModelResult<StrategiesModel>)_ModelResult;
+            return (ResultDTO<StrategiesModel>)_ModelResult;
         }
 
-
-        public async Task<ModelResult<StrategiesModel>> CreateStrategy(string maxLaps, string ClientId, string PilotId)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="maxLaps"></param>
+        /// <param name="ClientId"></param>
+        /// <param name="PilotId"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public async Task<ResultDTO<StrategiesModel>> CreateStrategy(string maxLaps, string ClientId, string PilotId)
         {
             try
             {
@@ -108,13 +119,17 @@ namespace Application.Layer.Services
                 _ModelResult.Message = ex.Message;
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
-            return (ModelResult<StrategiesModel>)_ModelResult;
+            return (ResultDTO<StrategiesModel>)_ModelResult;
         }
 
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
         private async Task<List<TiresModel>> GetTires()
         {
-            ModelResult<TiresModel> tiresResult = await _tiresService.GetAll();
+            ResultDTO<TiresModel> tiresResult = await _tiresService.GetAll();
 
             if (!tiresResult.Success)
                 throw new Exception(tiresResult.Message);

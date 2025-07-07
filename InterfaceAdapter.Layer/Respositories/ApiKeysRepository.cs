@@ -17,10 +17,8 @@ namespace InterfaceAdapter.Layer.Respositories
     public class ApiKeysRepository : IRepository<ApiKeysEntity>
     {
         private readonly AppDbContext _dbContext;
-        public ApiKeysRepository(AppDbContext dbContext) 
-        {
-            _dbContext = dbContext;
-        }
+        public ApiKeysRepository(AppDbContext dbContext)  => _dbContext = dbContext;
+        
         /// <summary>
         /// get all api keys from the database
         /// </summary>

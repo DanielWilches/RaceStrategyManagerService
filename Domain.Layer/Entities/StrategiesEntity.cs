@@ -18,7 +18,7 @@ namespace Domain.Layer.Entities
         [Key]
         [Required]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("Id")]
+        [Column("Id_Strategy")]
         public int Id { get; set; }
 
         [Column("Date", TypeName = "datetime2")]
@@ -46,19 +46,17 @@ namespace Domain.Layer.Entities
         public double avgConsumption { get; set; }
         
 
-        [Column("Pilot_ Id")]
+        [Column("Pilot_Id")]
         [Required]
         [ForeignKey("Pilots")]
         public int PilotId { get; set; }
         public virtual PilotsEntity Pilot { get; set; }
-
 
         [Column("Client_Id")]
         [Required]
         [ForeignKey("Clients")]
         public int ClientId { get; set; }
         public  virtual ClientsEntity Client { get; set; }
-
-
+        
     }
 }

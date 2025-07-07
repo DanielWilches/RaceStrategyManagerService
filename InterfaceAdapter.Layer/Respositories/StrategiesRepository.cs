@@ -12,16 +12,14 @@ namespace InterfaceAdapter.Layer.Respositories
     public class StrategiesRepository : IRepository<StrategiesEntity>
     {
         private readonly AppDbContext _dbContext;
-        public StrategiesRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        public StrategiesRepository(AppDbContext dbContext) => _dbContext = dbContext;
 
         /// <summary>
         /// get all strategies from the database
         /// </summary>
         /// <returns></returns>
         public async Task<IEnumerable<StrategiesEntity>> GetAllAsync() => await _dbContext.Strategies.ToListAsync();
+
 
         /// <summary>
         /// get a strategy by its id from the database
@@ -74,5 +72,7 @@ namespace InterfaceAdapter.Layer.Respositories
             _dbContext.Strategies.Remove(entity);
             await _dbContext.SaveChangesAsync();
         }
+
+        
     }
 }

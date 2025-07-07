@@ -12,11 +12,8 @@ namespace InterfaceAdapter.Layer.Respositories
     public class ClientsRepository : IRepository<ClientsEntity>
     {
         private readonly AppDbContext _dbContext;
-        public ClientsRepository(AppDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
+        public ClientsRepository(AppDbContext dbContext) => _dbContext = dbContext;
+       
         /// <summary>
         /// get all clients from the database
         /// </summary>

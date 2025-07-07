@@ -9,16 +9,10 @@ namespace RaceStrategyManagerService.Controllers
     [ApiController]
     public class TiresController : ControllerBase
     {
-
         private readonly TiresService<TiresEntity> _tiresService;
+        public TiresController(TiresService<TiresEntity> tiresService) =>_tiresService = tiresService;
 
-        public TiresController(TiresService<TiresEntity> tiresService)
-        {
-            _tiresService = tiresService;
-        }
-
-        [HttpGet]
-        
+        [HttpGet]        
         public IActionResult GetTires()
         {
             var tires = _tiresService.GetAll().Result;   
