@@ -29,22 +29,33 @@ namespace Application.Layer.Services
         {
             try
             {
-                var result = await _StrategiesRepository.GetAllAsync();
-                
+    
+                IEnumerable< StrategiesPilotClientDTO > result = await _StrategiesRepository.ExecuteSP("GetAllStrategies");
                 if (!result.Any())
                     throw new Exception("No strategies found.");
 
                 List<StrategiesModel> strategies = [.. result.Select(strategy => new StrategiesModel
                 {
-                    Id = strategy.Id,
-                    ClientId = strategy.ClientId,
+                    Id = strategy.Id_Strategy,
+                    clients = new ClientsModels{
+                        Id = strategy.Client_Id,
+                        Description = strategy.Description,
+                        Email = strategy.Email,
+                        isActivo = strategy.isActivo,
+                        Name= strategy.Name_Client
+                    },
+                    pilots = new PilotsModel
+                    {
+                        Id = strategy.Id_Pilot,
+                        Name = strategy.Name_Pilot,
+                        Team = strategy.Team,
+                    },
                     Date = strategy.Date,
-                    PilotId = strategy.PilotId,
-                    TotalLaps = strategy.TotalLaps,
-                    MaxLaps = strategy.MaxLaps,
-                    avgPerformance = strategy.avgPerformance,
-                    avgConsumption = strategy.avgConsumption,
-                    optimalStrategy = strategy.optimalStrategy
+                    TotalLaps = strategy.Total_Laps,
+                    MaxLaps = strategy.Max_Laps,
+                    avgPerformance = strategy.Avg_Performance,
+                    avgConsumption = strategy.avg_Consumption,
+                    optimalStrategy = strategy.Optimal_Strategy
                 })];
 
                 if (!strategies.Any())
@@ -61,7 +72,6 @@ namespace Application.Layer.Services
                 _ModelResult.Message = ex.Message;
                 _ModelResult.StatusCode = (int)StatusCodeHTTPEnum.GatewayTimeout;
             }
-
             return (ResultDTO<StrategiesModel>)_ModelResult;
         }
 

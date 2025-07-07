@@ -1,4 +1,5 @@
 ﻿using Application.Layer.Interfaces;
+using Domain.Layer.DTOs;
 using Domain.Layer.Entities;
 using InterfaceAdapter.Layer.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -73,6 +74,13 @@ namespace InterfaceAdapter.Layer.Respositories
             await _dbContext.SaveChangesAsync();
         }
 
-        
+    
+        public async Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp)
+        {
+            var prueba = await _dbContext.Database
+                .SqlQuery<StrategiesPilotClientDTO>($"EXEC {sp}")
+                .ToListAsync();
+            return prueba;
+        }
     }
 }

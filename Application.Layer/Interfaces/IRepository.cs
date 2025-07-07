@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Domain.Layer.DTOs;
+using System.Linq.Expressions;
 
 namespace Application.Layer.Interfaces
 {
@@ -10,5 +11,6 @@ namespace Application.Layer.Interfaces
         Task AddAsync(T entity);
         Task UpdateAsync(T entity);
         Task DeleteAsync(int id);
+        Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp);
     }
 }

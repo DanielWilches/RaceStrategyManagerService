@@ -1,4 +1,5 @@
 ﻿using Application.Layer.Interfaces;
+using Domain.Layer.DTOs;
 using Domain.Layer.Entities;
 using InterfaceAdapter.Layer.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -70,6 +71,11 @@ namespace InterfaceAdapter.Layer.Respositories
 
             _dbContext.Pilots.Remove(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp)
+        {
+            throw new NotImplementedException();
         }
     }
 }
