@@ -1,27 +1,21 @@
 ﻿using Domain.Layer.DTOs;
 using Domain.Layer.Models;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 
 namespace Domain.Layer
 {
     public class Strategy
     {
         private readonly List<TiresModel> _tires;
-
         public Strategy(List<TiresModel> tires)
         {
             _tires = tires;
         }
 
-        // Devuelve todas las combinaciones válidas ordenadas por menor número de paradas y mayor rendimiento promedio
         public CombinationsDTO GetOptimalStrategies(int maxLaps)
         {
             return GetCombinations(maxLaps);
         }
-
-        // Genera todas las combinaciones válidas de stints usando programación dinámica
+        
         private CombinationsDTO GetCombinations(int maxVueltas)
         {
             List<CombinationsDTO> resultados = CreateCombinations(maxVueltas);
