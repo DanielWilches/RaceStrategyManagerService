@@ -12,6 +12,17 @@ using RaceStrategyManagerService.Constants;
 
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost", builder =>
+    {
+        builder
+            .WithOrigins("http://localhost:4200") // Puerto de Angular
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 // Add services to the container.
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -65,6 +76,7 @@ builder.Services.AddSwaggerGen();
 
 
 var app = builder.Build();
+app.UseCors("AllowLocalhost");
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

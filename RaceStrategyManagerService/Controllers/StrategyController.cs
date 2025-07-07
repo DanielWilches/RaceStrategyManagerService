@@ -6,24 +6,24 @@ using RaceStrategyManagerService.ModelRequest;
 
 namespace RaceStrategyManagerService.Controllers
 {
-    [Route("api/v1/[controller]")]
+    
     [ApiController]
     public class StrategyController : ControllerBase
     {
         private readonly StrategiesService<StrategiesEntity> _strategiesService;
         public StrategyController(StrategiesService<StrategiesEntity> StrategiesService) => _strategiesService = StrategiesService;
 
-        [HttpGet]
+        [HttpGet("api/v1/[controller]/")]
         public IActionResult GetStrategies()
         {
             var result = _strategiesService.GetAll().Result;
             return Ok(result);
         }
 
-        [HttpPost("{CreateStrategyRequest}")]
-        public IActionResult CreateStrateg(CreateStrategyRequest Create)
+        [HttpPost("api/v1/[controller]/optimal")]
+        public IActionResult CreateStrateg([FromQuery] string maxLaps, [FromQuery] string ClientId, [FromQuery] string PilotId)
         {
-            var result = _strategiesService.CreateStrategy(Create.MaxLaps, Create.ClientId, Create.PilotId).Result;
+            var result = _strategiesService.CreateStrategy(maxLaps, ClientId, PilotId).Result;
             return Ok(result);
         }
     }

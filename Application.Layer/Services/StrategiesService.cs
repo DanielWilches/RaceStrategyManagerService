@@ -90,17 +90,23 @@ namespace Application.Layer.Services
                 if (string.IsNullOrEmpty(maxLaps) || string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(PilotId))
                     throw new ArgumentException("Invalid input parameters.");
 
-                int laps = int.Parse(maxLaps);
+                int mlaps = int.Parse(maxLaps);
                 int clientId = int.Parse(ClientId);
                 int pilotId = int.Parse(PilotId);
 
                 List<TiresModel> tires = GetTires().Result;
-                if (tires.Min(item => item.EstimatedLaps) > laps)
+                if (tires.Min(item => item.EstimatedLaps) > mlaps)
                     throw new Exception("The minimum estimated laps of the tires is less than the total laps.");
 
                 Strategy strategy = new Strategy(tires);
 
-                var optimal = strategy.BuilOptimalEstrategy(laps);
+                CombinationsDTO optimal = strategy.BuilOptimalEstrategy(mlaps);
+                if (optimal == null || optimal.Strateys == null || !optimal.Strateys.Any())
+                    throw new Exception("No optimal strategy found.");
+
+                if (optimal.totalLabs > mlaps)
+                    throw new Exception("The total laps of the optimal strategy exceeds the maximum laps.");
+
                 string optimalStrategy = string.Empty;
                 foreach (var item in optimal.Strateys) 
                    optimalStrategy += $"{item}|";
@@ -112,7 +118,7 @@ namespace Application.Layer.Services
                     PilotId = pilotId,
                     Date = DateTime.Now,
                     TotalLaps = optimal?.totalLabs ?? 0,
-                    MaxLaps = laps,
+                    MaxLaps = mlaps,
                     avgPerformance = optimal?.avgPerformance ?? 0,
                     avgConsumption = optimal?.avgConsumption?? 0,
                     optimalStrategy = optimalStrategy
