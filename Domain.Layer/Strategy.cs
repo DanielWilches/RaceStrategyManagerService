@@ -1,127 +1,71 @@
 ﻿using Domain.Layer.DTOs;
 using Domain.Layer.Models;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Runtime.InteropServices;
 
 namespace Domain.Layer
 {
     public class Strategy
     {
-        List<TiresModel> _tires;
-        public Strategy(List<TiresModel> Tires) 
+        private readonly List<TiresModel> _tires;
+        public Strategy(List<TiresModel> tires)
         {
-            _tires = Tires;
+            _tires = tires;
         }
 
-
-        public CombinationsDTO BuilOptimalEstrategy(int maxLaps) 
+        public CombinationsDTO GetOptimalStrategies(int maxLaps)
         {
-            string optimalStrategy = string.Empty;
-            List<List<TiresModel>> combinations = GetCombinations(maxLaps);
-            List<CombinationsDTO>  processCombination = ProcessCombinations(combinations, maxLaps);
-            return processCombination.First();
+            return GetCombinations(maxLaps);
+        }
+        
+        private CombinationsDTO GetCombinations(int maxVueltas)
+        {
+            List<CombinationsDTO> resultados = CreateCombinations(maxVueltas);
+            var maxVueltasLogradas =  resultados.First(item => item.TotalLabs == resultados.Max(r => r.TotalLabs)) ;
+            return maxVueltasLogradas;
         }
 
-        private List<CombinationsDTO> ProcessCombinations(List<List<TiresModel>> combinations, int maxLaps) 
+        private List<CombinationsDTO> CreateCombinations(int maxVueltas) 
         {
-            List<CombinationsDTO> arrCombinations = new List<CombinationsDTO>();
-            List<string> Strateys = new List<string>();
-            List<string> IdStrateys = new List<string>();
-            int? totalLabs = 0;
-            foreach (var combination in combinations)
+            var Soft = _tires.First(tire => (tire?.type ?? string.Empty).Equals("Soft"));
+            var Medium = _tires.First(tire => (tire?.type ?? string.Empty).Equals("Medium"));
+            var Hard = _tires.First(tire => (tire?.type ?? string.Empty).Equals("Hard"));
+            List<CombinationsDTO> resultados = new List<CombinationsDTO>();
+            for (int s = 0; s <= maxVueltas / Soft.EstimatedLaps; s++)
             {
-                Strateys = new List<string>();
-                IdStrateys = new List<string>();
-                totalLabs = 0;
-                
-                foreach (var com in combination)
+                for (int n = 0; n <= (maxVueltas - Soft.EstimatedLaps * s) / Medium.EstimatedLaps; n++)
                 {
-                    Strateys.Add(com.type);
-                    IdStrateys.Add(com.Id.ToString());
-                    totalLabs += com.EstimatedLaps;
-                }
-
-                arrCombinations.Add(new CombinationsDTO
-                {
-                    avgPerformance = combination.Average(item => item.Performance),
-                    avgConsumption = combination.Sum(item => item.ConsumptionLap),
-                    IdStrateys = IdStrateys,
-                    Strateys = Strateys,
-                    totalLabs = totalLabs
-                });
-            }
-            var ordenPerformance  =arrCombinations
-                .OrderByDescending(item => item.avgPerformance)
-                .ThenByDescending(item => item.totalLabs)
-                .ToList();
-
-            return ordenPerformance
-                .OrderByDescending(item => item.totalLabs).ToList();
-
-        }
-
-        private double SumatoriaLimite(int totalTires)
-        {
-            double result = 0;
-            double result2 = 0;
-            for (int i = 0; i < totalTires; i++)   
-                result += Math.Pow(totalTires, i + 1);
-            return result;
-        }
-
-        private List<List<TiresModel>> GetCombinations(int maxlaps) 
-        {
-
-            double limit = SumatoriaLimite(_tires.Count());
-            int numeroRandom = 0;
-            Random random = new Random();
-            TiresModel tiresTemporal = new TiresModel();
-            List<List<TiresModel>> arrTires = new List<List<TiresModel>>();
-            List<TiresModel> Arr = new List<TiresModel>();
-
-
-            for (int i = 0; i < limit; i++)
-            {
-                Arr = new List<TiresModel>();
-                int? sumLamps = 0;
-                for (int j = 0; j < _tires.Count(); j++)
-                {
-                    numeroRandom = random.Next(0, _tires.Count());
-                    tiresTemporal = _tires[numeroRandom];
-                    //Arr.Add(tiresTemporal);
-                    if (Arr.Any())
+                    for (int h = 0; h <= (maxVueltas - Soft.EstimatedLaps * s - Medium.EstimatedLaps * n) / 25; h++)
                     {
-                        //int? LastItem = Arr.Last()?.EstimatedLaps;
-                        //int? firstItem = Arr.First()?.EstimatedLaps;
-                        
-                        if ((sumLamps + tiresTemporal.EstimatedLaps) <= maxlaps)
+                        int totalVueltas = (Soft.EstimatedLaps ?? 0) * s + (Medium.EstimatedLaps ?? 0) * n + (Hard.EstimatedLaps ?? 0) * h;
+
+                        if (totalVueltas <= maxVueltas)
                         {
-                            sumLamps += tiresTemporal.EstimatedLaps;
-                            Arr.Add(tiresTemporal);
+                            List<int>? avgPerformance = new List<int>() ;
+                            List<double>? avgConsumption = new List<double>();
+                            var tires = new List<TiresModel>();
+                            for (int i = 0; i < s; i++) tires.Add(Soft);
+                            for (int i = 0; i < n; i++) tires.Add(Medium);
+                            for (int i = 0; i < h; i++) tires.Add(Hard);
+
+                            foreach (var item in tires)
+                            {
+                                avgPerformance.Add(item?.Performance??0);
+                                avgConsumption.Add(item?.ConsumptionLap ??  0);
+                            }
+                            resultados.Add(new CombinationsDTO
+                            {
+                                TotalLabs = totalVueltas,
+                                Strateys = tires,
+                                AvgConsumption = avgConsumption,
+                                AvgPerformance = avgPerformance,
+                            });
                         }
                     }
-                    else 
-                    {
-                        Arr.Add(tiresTemporal);
-                        sumLamps = tiresTemporal.EstimatedLaps;
-                    }
-                        
-
-
                 }
-
-                if (!arrTires.Contains(Arr))
-                    arrTires.Add(Arr);
-                else
-                    limit += 1;
             }
-
-            return arrTires;
+            return resultados;
         }
 
-
-
-
     }
+
+
 }

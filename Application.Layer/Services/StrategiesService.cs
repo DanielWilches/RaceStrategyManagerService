@@ -14,6 +14,10 @@ namespace Application.Layer.Services
         private IRepository<T> _StrategiesRepository;
         private IModelResult<StrategiesModel> _ModelResult;
         private TiresService<TiresEntity> _tiresService;
+
+        int _mlaps;
+        int _clientId ;
+        int _pilotId;
         public StrategiesService(IRepository<T> StrategiesRepository, IModelResult<StrategiesModel> ModelResult, TiresService<TiresEntity> tiresService)
         {
             _StrategiesRepository = StrategiesRepository;
@@ -90,40 +94,11 @@ namespace Application.Layer.Services
                 if (string.IsNullOrEmpty(maxLaps) || string.IsNullOrEmpty(ClientId) || string.IsNullOrEmpty(PilotId))
                     throw new ArgumentException("Invalid input parameters.");
 
-                int mlaps = int.Parse(maxLaps);
-                int clientId = int.Parse(ClientId);
-                int pilotId = int.Parse(PilotId);
+                _mlaps = int.Parse(maxLaps);
+                _clientId = int.Parse(ClientId);
+                _pilotId = int.Parse(PilotId);
 
-                List<TiresModel> tires = GetTires().Result;
-                if (tires.Min(item => item.EstimatedLaps) > mlaps)
-                    throw new Exception("The minimum estimated laps of the tires is less than the total laps.");
-
-                Strategy strategy = new Strategy(tires);
-
-                CombinationsDTO optimal = strategy.BuilOptimalEstrategy(mlaps);
-                if (optimal == null || optimal.Strateys == null || !optimal.Strateys.Any())
-                    throw new Exception("No optimal strategy found.");
-
-                if (optimal.totalLabs > mlaps)
-                    throw new Exception("The total laps of the optimal strategy exceeds the maximum laps.");
-
-                string optimalStrategy = string.Empty;
-                foreach (var item in optimal.Strateys) 
-                   optimalStrategy += $"{item}|";
-                    
-                    
-                var newStrategy = new StrategiesEntity
-                {
-                    ClientId = clientId,
-                    PilotId = pilotId,
-                    Date = DateTime.Now,
-                    TotalLaps = optimal?.totalLabs ?? 0,
-                    MaxLaps = mlaps,
-                    avgPerformance = optimal?.avgPerformance ?? 0,
-                    avgConsumption = optimal?.avgConsumption?? 0,
-                    optimalStrategy = optimalStrategy
-                };
-                await _StrategiesRepository.AddAsync((T)newStrategy);
+                await _StrategiesRepository.AddAsync((T)buildStrategy());
 
                 _ModelResult.Success = true;
                 _ModelResult.Message = "Strategy created successfully.";
@@ -138,6 +113,42 @@ namespace Application.Layer.Services
             return (ResultDTO<StrategiesModel>)_ModelResult;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="Exception"></exception>
+        public StrategiesEntity buildStrategy() 
+        {
+            List<TiresModel> tires = GetTires().Result;
+            if (tires.Min(item => item.EstimatedLaps) > _mlaps)
+                throw new Exception("The minimum estimated laps of the tires is less than the total laps.");
+
+            CombinationsDTO optimal = new Strategy(tires).GetOptimalStrategies(_mlaps);
+            if (optimal == null || optimal.Strateys == null || !optimal.Strateys.Any())
+                throw new Exception("No optimal strategy found.");
+
+            if (optimal.TotalLabs > _mlaps)
+                throw new Exception("The total laps of the optimal strategy exceeds the maximum laps.");
+
+            string optimalStrategy = string.Empty;
+            foreach (var item in optimal.Strateys)
+                optimalStrategy += $"{item.type}|";
+
+
+            return new StrategiesEntity
+            {
+                ClientId = _clientId,
+                PilotId = _pilotId,
+                Date = DateTime.Now,
+                TotalLaps = optimal?.TotalLabs ?? 0,
+                MaxLaps = _mlaps,
+                avgPerformance = optimal.AvgPerformance.Average(),
+                avgConsumption = optimal.AvgConsumption.Average(),
+                optimalStrategy = optimalStrategy
+            };
+        }
+        
         /// <summary>
         /// 
         /// </summary>
