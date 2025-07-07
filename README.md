@@ -1,7 +1,5 @@
 
-# Prueba técnica | autoGermana
-
-Hola que tal este es el back para la prueba tecnica de autogermana el front esta en el siguiente repo https://github.com/DanielWilches/RaceStrategyManager
+Hola que tal este es el back para la prueba el front esta en el siguiente repo https://github.com/DanielWilches/RaceStrategyManager
 
 
 ## Documentación
