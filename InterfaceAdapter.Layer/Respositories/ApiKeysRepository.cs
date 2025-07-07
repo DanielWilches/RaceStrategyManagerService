@@ -1,4 +1,5 @@
 ﻿using Application.Layer.Interfaces;
+using Domain.Layer.DTOs;
 using Domain.Layer.Entities;
 using InterfaceAdapter.Layer.DataContext;
 using Microsoft.EntityFrameworkCore;
@@ -17,10 +18,8 @@ namespace InterfaceAdapter.Layer.Respositories
     public class ApiKeysRepository : IRepository<ApiKeysEntity>
     {
         private readonly AppDbContext _dbContext;
-        public ApiKeysRepository(AppDbContext dbContext) 
-        {
-            _dbContext = dbContext;
-        }
+        public ApiKeysRepository(AppDbContext dbContext)  => _dbContext = dbContext;
+        
         /// <summary>
         /// get all api keys from the database
         /// </summary>
@@ -77,6 +76,11 @@ namespace InterfaceAdapter.Layer.Respositories
 
             _dbContext.ApiKeys.Remove(entity);
             await _dbContext.SaveChangesAsync();
+        }
+
+        public Task<IEnumerable<StrategiesPilotClientDTO>> ExecuteSP(string sp)
+        {
+            throw new NotImplementedException();
         }
     }
 }

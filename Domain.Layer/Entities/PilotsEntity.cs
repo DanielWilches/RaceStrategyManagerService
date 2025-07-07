@@ -18,10 +18,10 @@ namespace Domain.Layer.Entities
         [Required]
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        [Column("Id")]
+        [Column("Id_Pilot")]
         public int Id { get; set; }
         [Required]
-        [Column("Name", TypeName = "varchar(100)")]            
+        [Column("Name_Pilot", TypeName = "varchar(100)")]            
         [MaxLength(100)]
         public string? Name { get; set; }
         [Required]

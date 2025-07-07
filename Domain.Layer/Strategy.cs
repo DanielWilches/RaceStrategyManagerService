@@ -15,17 +15,17 @@ namespace Domain.Layer
         }
 
 
-        public CombinationsModel BuilOptimalEstrategy(int maxLaps) 
+        public CombinationsDTO BuilOptimalEstrategy(int maxLaps) 
         {
             string optimalStrategy = string.Empty;
             List<List<TiresModel>> combinations = GetCombinations(maxLaps);
-            List<CombinationsModel>  processCombination = ProcessCombinations(combinations, maxLaps);
+            List<CombinationsDTO>  processCombination = ProcessCombinations(combinations, maxLaps);
             return processCombination.First();
         }
 
-        private List<CombinationsModel> ProcessCombinations(List<List<TiresModel>> combinations, int maxLaps) 
+        private List<CombinationsDTO> ProcessCombinations(List<List<TiresModel>> combinations, int maxLaps) 
         {
-            List<CombinationsModel> arrCombinations = new List<CombinationsModel>();
+            List<CombinationsDTO> arrCombinations = new List<CombinationsDTO>();
             List<string> Strateys = new List<string>();
             List<string> IdStrateys = new List<string>();
             int? totalLabs = 0;
@@ -42,7 +42,7 @@ namespace Domain.Layer
                     totalLabs += com.EstimatedLaps;
                 }
 
-                arrCombinations.Add(new CombinationsModel
+                arrCombinations.Add(new CombinationsDTO
                 {
                     avgPerformance = combination.Average(item => item.Performance),
                     avgConsumption = combination.Sum(item => item.ConsumptionLap),
